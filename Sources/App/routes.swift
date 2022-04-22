@@ -6,9 +6,13 @@ func routes(_ app: Application) throws {
         return req.view.render("index", ["title": "Hello Vapor!"])
     }
 
-    app.get("hello") { req -> String in
-        return "Hello, world!"
+    app.get("hello", ":name") { req -> String in
+        let name = req.parameters.get("name")
+        return "Hello, \(name ?? "world")!"
     }
-
-    try app.register(collection: TodoController())
+    app.get("foo") { req -> String in
+        return "bar"
+    }
+    
+    try app.register(collection: IdeaController())
 }
